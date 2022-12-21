@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Discordの疑似Vtuberキットが壊れたので修正した | リリオのブログ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="どうも、リリオです。 今まで使っていた Discord の Overlay を使用した OBS の Vtuber キットが HTML の仕様変更により使えなくなってしまいました。 今回はこちらの修正をしたのでコードを置いておこうと思います。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Discordの疑似Vtuberキットが壊れたので修正した">
+<meta property="og:url" content="https://ririo.dev/blog/2022/12/02_discord_overlay/index.html">
+<meta property="og:site_name" content="リリオのブログ">
+<meta property="og:description" content="どうも、リリオです。 今まで使っていた Discord の Overlay を使用した OBS の Vtuber キットが HTML の仕様変更により使えなくなってしまいました。 今回はこちらの修正をしたのでコードを置いておこうと思います。">
+<meta property="og:locale" content="ja_JP">
+<meta property="article:published_time" content="2022-12-21T23:42:00.000Z">
+<meta property="article:modified_time" content="2022-12-21T14:43:12.057Z">
+<meta property="article:author" content="リリオ">
+<meta property="article:tag" content="Discord">
+<meta property="article:tag" content="CSS">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="リリオのブログ" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/blog/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/blog/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">リリオのブログ</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSSフィード"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="検索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="検索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://ririo.dev/blog"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-2022/12/02_discord_overlay" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/blog/2022/12/02_discord_overlay/" class="article-date">
+  <time class="dt-published" datetime="2022-12-21T23:42:00.000Z" itemprop="datePublished">2022-12-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Discordの疑似Vtuberキットが壊れたので修正した
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>どうも、リリオです。</p>
+<p>今まで使っていた Discord の Overlay を使用した OBS の Vtuber キットが HTML の仕様変更により使えなくなってしまいました。</p>
+<p>今回はこちらの修正をしたのでコードを置いておこうと思います。</p>
+<span id="more"></span>
+
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">  <span class="attribute">background-color</span>: <span class="built_in">rgba</span>(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">  <span class="attribute">margin</span>: <span class="number">0px</span> auto;</span><br><span class="line">  <span class="attribute">overflow</span>: hidden;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">div</span><span class="selector-attr">[class^=<span class="string">&#x27;Voice_voiceContainer&#x27;</span>]</span> &#123;</span><br><span class="line">  <span class="attribute">position</span>: absolute;</span><br><span class="line">  <span class="attribute">bottom</span>: <span class="number">0</span>;</span><br><span class="line">  <span class="attribute">right</span>: <span class="number">50px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">div</span><span class="selector-attr">[class^=<span class="string">&#x27;Voice_user&#x27;</span>]</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">img</span><span class="selector-attr">[class^=<span class="string">&#x27;Voice_avatar&#x27;</span>]</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  -moz-<span class="attribute">box-sizing</span>: border-box;</span><br><span class="line">  <span class="attribute">box-sizing</span>: border-box;</span><br><span class="line">  <span class="attribute">background</span>: <span class="built_in">url</span>(<span class="string">https://example.com/image.png</span>) no-repeat; <span class="comment">/* 画像のURLを指定する */</span></span><br><span class="line">  <span class="attribute">width</span>: <span class="number">300px</span> <span class="meta">!important</span>; <span class="comment">/* 画像の横幅 */</span></span><br><span class="line">  <span class="attribute">height</span>: <span class="number">300px</span> <span class="meta">!important</span>; <span class="comment">/* 画像の縦幅 */</span></span><br><span class="line">  <span class="attribute">padding-left</span>: <span class="number">300px</span>; <span class="comment">/* 画像の横幅をもう一回 */</span></span><br><span class="line">  <span class="attribute">filter</span>: <span class="built_in">brightness</span>(<span class="number">60%</span>);</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">0.7</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">0</span> <span class="meta">!important</span>;</span><br><span class="line">  <span class="attribute">transition</span>: all <span class="number">0.1s</span> ease-in-out;</span><br><span class="line">  <span class="attribute">margin-bottom</span>: -<span class="number">30px</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">img</span><span class="selector-attr">[class*=<span class="string">&#x27;Voice_avatarSpeaking&#x27;</span>]</span> &#123;</span><br><span class="line">  <span class="attribute">border-color</span>: transparent <span class="meta">!important</span>;</span><br><span class="line">  <span class="attribute">filter</span>: <span class="built_in">brightness</span>(<span class="number">100%</span>);</span><br><span class="line">  <span class="attribute">opacity</span>: <span class="number">1</span>;</span><br><span class="line">  <span class="attribute">margin-bottom</span>: -<span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">animation</span>: jumping <span class="number">0.3s</span> ease infinite alternate;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@keyframes</span> jumping &#123;</span><br><span class="line">  <span class="number">0%</span> &#123;</span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">translateY</span>(<span class="number">0px</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="number">100%</span> &#123;</span><br><span class="line">    <span class="attribute">transform</span>: <span class="built_in">translateY</span>(-<span class="number">10px</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">img</span><span class="selector-attr">[class^=<span class="string">&#x27;Voice_avatar&#x27;</span>]</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: none;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">img</span><span class="selector-attr">[src=<span class="string">&quot;https://cdn.discordapp.com/avatars/なにかしらのID/なにかしらのID.jpg&quot;</span>]</span> <span class="comment">/* Discordの自画像のURL */</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attribute">display</span>: block <span class="meta">!important</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>使用方法は以下の通り。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://streamkit.discord.com/overlay">Discord Streamkit Overlay</a>から、Voice Widget を選択し、必要なオーバーレイの URL を取得する。</li>
+<li>OBS 上に展開後、上記 CSS をコピー＆ペーストする。</li>
+<li>Web ブラウザ上で、オーバーレイ上の自分の画像を右クリックして、<br>「画像のアドレスをコピー」を選択し、52 行目にある URL と置き換える。</li>
+<li>あとは使いたい画像を用意し、20 行目の URL と置き換える。</li>
+</ul>
+<h2 id="今までのが何で使えなくなったの？"><a href="#今までのが何で使えなくなったの？" class="headerlink" title="今までのが何で使えなくなったの？"></a>今までのが何で使えなくなったの？</h2><p>そもそも今までのって何？と言う方は<a target="_blank" rel="noopener" href="https://ririogame.hatenablog.com/entry/2021/07/21/015918">OBS 用の Vtuber 風 Discord Overlay を作ってみた - リリオの日記型倉庫 3</a>をご覧ください。</p>
+<p>まず、今回の更新で以下のような変更がページ上にされています。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;root&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;Voice_voiceContainer__adk9M&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span> <span class="attr">class</span>=<span class="string">&quot;Voice_voiceStates__a121W&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">li</span> <span class="attr">class</span>=<span class="string">&quot;Voice_voiceState__OCoZh&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">img</span></span></span><br><span class="line"><span class="tag">          <span class="attr">class</span>=<span class="string">&quot;Voice_avatar__htiqH&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">src</span>=<span class="string">&quot;https://cdn.discordapp.com/avatars/数字/画像.jpg&quot;</span></span></span><br><span class="line"><span class="tag">          <span class="attr">alt</span>=<span class="string">&quot;&quot;</span></span></span><br><span class="line"><span class="tag">        /&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;Voice_user__8fGwX&quot;</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">span</span></span></span><br><span class="line"><span class="tag">            <span class="attr">class</span>=<span class="string">&quot;Voice_name__TALd9&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">style</span>=<span class="string">&quot;color: rgb(255, 255, 255); font-size: 14px; background-color: rgba(30, 33, 36, 0.95);&quot;</span></span></span><br><span class="line"><span class="tag">          &gt;</span></span><br><span class="line">            リリオ</span><br><span class="line">          <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>ちょっと今までのページがどういう構成になったのか覚えてないのですが、<br>クラス名に謎のソルトが付くようになっており、<br>それによって今までの CSS が効かないようになっていた模様です。</p>
+<p>それに加えて、ユーザを特定するための値が取得できなくなりました。<br>正確にはできるのですが、Discord の ID から指定することはできなくなっています。</p>
+<h2 id="どのような対応をしたの？"><a href="#どのような対応をしたの？" class="headerlink" title="どのような対応をしたの？"></a>どのような対応をしたの？</h2><p>CSS そのものは変更せず、CSS を当てる先を上手いことソルトを避けて指定できるようにしました。</p>
+<p>例えば、<code>Voice_user__8fGwX</code>ですが、<br>今回の場合では<code>div[class^=&#39;Voice_user&#39;]</code>といった感じで指定することによって、<br>前方一致で取得できるように変更しています。</p>
+<p>ユーザの指定に関してですが、<br>画像はユーザ別に決まっているものだったので、<br>img タグの src 属性を上手く利用して他のユーザ分を非表示にしています。</p>
+<p>今後ももしかすると overlay に変更が加わる可能性はあるのですが、<br>2022-12-21 現在では問題なく動作することを確認しているので、<br>もし使ってみたい方がいらっしゃいましたら使ってみてください。</p>
+<h2 id="〆"><a href="#〆" class="headerlink" title="〆"></a>〆</h2><p>なにか分からないことがあったら Twitter などで質問してね！</p>
+<p>さいごに、チャンネル登録とフォローとサブスクライブと 10000 チアーと 50000 スーパーチャットをお願いします。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://ririo.dev/blog/2022/12/02_discord_overlay/" data-id="clbxrlpb10002dkoj041z39pf" data-title="Discordの疑似Vtuberキットが壊れたので修正した" class="article-share-link">共有</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/CSS/" rel="tag">CSS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Discord/" rel="tag">Discord</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/blog/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">Hello World</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグ</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/CSS/" rel="tag">CSS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Discord/" rel="tag">Discord</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/%E9%9B%91%E8%A8%98/" rel="tag">雑記</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグクラウド</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/CSS/" style="font-size: 10px;">CSS</a> <a href="/blog/tags/Discord/" style="font-size: 10px;">Discord</a> <a href="/blog/tags/%E9%9B%91%E8%A8%98/" style="font-size: 10px;">雑記</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">アーカイブ</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2022/12/">12月 2022</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2022/12/02_discord_overlay/">Discordの疑似Vtuberキットが壊れたので修正した</a>
+          </li>
+        
+          <li>
+            <a href="/blog/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2022/12/01_init_post/">テスト投稿 どうもリリオです</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 リリオ<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/blog/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/blog/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
