@@ -1,6 +1,9 @@
 {
   "ignorePaths": [],
   "words": [
-    "Nuxt"
+    "heroicons",
+    "Nuxt",
+    "ririo",
+    "vueuse"
   ]
 }
