@@ -1,10 +1,9 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-
-  extends: 'content-wind',
-
   modules: [
+    '@nuxt/content',
     '@nuxt/eslint',
+    '@nuxt/ui',
     '@nuxtjs/tailwindcss',
   ],
 
@@ -12,11 +11,20 @@ export default defineNuxtConfig({
   app: {
     baseURL: '/blog/',
   },
+
+  css: [
+    '@/assets/css/tailwind.css',
+  ],
+
   routeRules: {
     '/': { prerender: true },
   },
 
-  compatibilityDate: '2024-12-10',
+  future: {
+    compatibilityVersion: 4,
+  },
+
+  compatibilityDate: '2025-06-17',
 
   eslint: {
     config: {
