@@ -1,32 +1,22 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+
+  extends: 'content-wind',
+
+  modules: [
+    '@nuxt/eslint',
+    '@nuxtjs/tailwindcss',
+  ],
+
   devtools: { enabled: true },
-  ssr: false,
-
-  extends: '@nuxt-themes/typography',
-
   app: {
     baseURL: '/blog/',
   },
-
-  modules: [
-    '@nuxt/content',
-    '@nuxt/ui',
-    '@nuxt/eslint',
-    '@nuxt/image',
-    '@vueuse/nuxt',
-  ],
-
-  content: {
-    highlight: {
-      theme: {
-        // Default theme (same as single string)
-        default: 'github-light',
-        // Theme used if `html.dark`
-        dark: 'github-dark',
-      },
-    },
+  routeRules: {
+    '/': { prerender: true },
   },
+
+  compatibilityDate: '2024-12-10',
 
   eslint: {
     config: {
