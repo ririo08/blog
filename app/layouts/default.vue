@@ -1,8 +1,8 @@
 <script setup lang="ts"></script>
 
 <template>
-  <UContainer class="px-0">
-    <main class="border-1 rounded-lg border-orange-500 m-2 p-2">
+  <UContainer class="p-2 min-h-screen">
+    <main class="border-1 rounded-lg border-orange-500 p-1 min-h-screen">
       <NuxtLink
         to="/"
       >
@@ -12,6 +12,9 @@
       </NuxtLink>
       <slot />
     </main>
+    <small class="block text-right text-xs mt-2">
+      リリオ
+    </small>
   </UContainer>
 </template>
 
