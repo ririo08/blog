@@ -7,6 +7,13 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
   ],
 
+  components: [
+    {
+      path: '~/components',
+      pathPrefix: false,
+    },
+  ],
+
   devtools: { enabled: true },
   app: {
     baseURL: '/blog/',

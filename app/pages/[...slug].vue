@@ -11,8 +11,11 @@ if (!page.value) {
 </script>
 
 <template>
-  <ContentRenderer
-    v-if="page"
-    :value="page"
-  />
+  <section class="content">
+    <h2>{{ page?.title }}</h2>
+    <ContentRenderer
+      v-if="page"
+      :value="page"
+    />
+  </section>
 </template>

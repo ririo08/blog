@@ -1,12 +1,18 @@
 <script setup lang="ts"></script>
 
 <template>
-  <div class="max-w-4xl m-auto border-1 border-orange-500 rounded-lg p-2 my-2">
-    <h1 class="text-2xl font-bold">
-      ririo blog
-    </h1>
-    <slot />
-  </div>
+  <UContainer class="px-0">
+    <main class="border-1 rounded-lg border-orange-500 m-2 p-2">
+      <NuxtLink
+        to="/"
+      >
+        <h1 class="text-2xl font-bold">
+          # ririo blog
+        </h1>
+      </NuxtLink>
+      <slot />
+    </main>
+  </UContainer>
 </template>
 
 <style scoped></style>
