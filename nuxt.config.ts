@@ -1,41 +1,31 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+const siteOrigin = 'https://ririo08.github.io'
+const siteUrl = `${siteOrigin}/blog`
+
 export default defineNuxtConfig({
-  modules: [
-    '@nuxt/content',
-    '@nuxt/eslint',
-    '@nuxt/ui',
-    '@nuxtjs/tailwindcss',
-  ],
+  extends: ['docus'],
+  modules: ['@nuxt/eslint'],
 
-  components: [
-    {
-      path: '~/components',
-      pathPrefix: false,
-    },
-  ],
-
-  devtools: { enabled: true },
   app: {
     baseURL: '/blog/',
   },
 
-  css: [
-    '@/assets/css/tailwind.css',
-  ],
-
-  routeRules: {
-    '/': { prerender: true },
+  site: {
+    name: 'ririo blog',
+    url: siteOrigin,
   },
-
-  future: {
-    compatibilityVersion: 4,
-  },
-
-  compatibilityDate: '2025-06-17',
 
   eslint: {
     config: {
       stylistic: true,
     },
+  },
+
+  llms: {
+    domain: siteUrl,
+  },
+
+  robots: {
+    robotsTxt: false,
   },
 })

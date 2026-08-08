@@ -10,45 +10,36 @@ on:
 
 jobs:
   ci:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        node: [18.x]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout 🛎
-        uses: actions/checkout@master
+        uses: actions/checkout@v6
 
       - name: Setup node env 🏗
-        uses: actions/setup-node@v2.3.0
+        uses: actions/setup-node@v6
         with:
-          node-version: ${{ matrix.node }}
-          check-latest: true
+          node-version: '24.11'
 
-      - name: Get yarn cache directory path 🛠
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - name: Cache node_modules 📦
-        uses: actions/cache@v2.1.6
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+      - name: Setup Bun 🥟
+        uses: oven-sh/setup-bun@v2
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+          bun-version: '1.3.14'
 
-      - name: Install dependencies 👨🏻‍💻
-        run: yarn
+      - name: Install dependencies 📦
+        run: bun install --frozen-lockfile
 
-      - name: Hexo Generate 💚
-        run: yarn build
+      - name: Lint 💚
+        run: bun run lint
 
-      - name: Github Pages Deploy 🏳️
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Generate site 🏗
+        run: bun run generate
+
+      - name: GitHub Pages Deploy 🏳️
+        if: github.event_name == 'push'
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
-          FOLDER: public
+          publish_dir: ./.output/public
