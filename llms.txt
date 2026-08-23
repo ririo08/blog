@@ -1,0 +1,15 @@
+# ririo blog
+
+## Documentation Sets
+
+- [ririo blog](https://ririo08.github.io/blog/llms-full.txt)
+
+## Docs
+
+- [Discordの疑似Vtuberキットが壊れたので修正した](https://ririo08.github.io/blog/raw/2022/12/02_discord_overlay.md): Discord Overlayの仕様変更で壊れたCSSを修正した手順メモ。
+- [2022年の活動を振り返る](https://ririo08.github.io/blog/raw/2022/12/03_lookback_2022.md): 2022年の動画投稿・配信・ゲーム活動の振り返り。
+- [テスト投稿 どうもリリオです](https://ririo08.github.io/blog/raw/2022/12/init_post.md): ブログ再開と今後の活動についての最初の投稿。
+
+## Landing
+
+- [ririo blog](https://ririo08.github.io/blog/raw/index.md): 技術メモと雑記
