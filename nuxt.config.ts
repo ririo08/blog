@@ -15,6 +15,12 @@ export default defineNuxtConfig({
     url: siteOrigin,
   },
 
+  docus: {
+    assistant: {
+      enabled: false,
+    },
+  },
+
   eslint: {
     config: {
       stylistic: true,

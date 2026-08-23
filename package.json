@@ -26,5 +26,8 @@
     "better-sqlite3": "^12.11.1",
     "docus": "^5.12.3",
     "nuxt": "^4.5.2"
+  },
+  "patchedDependencies": {
+    "docus@5.12.3": "patches/docus@5.12.3.patch"
   }
 }

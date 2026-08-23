@@ -1,0 +1,101 @@
+diff --git a/app/composables/useSeo.ts b/app/composables/useSeo.ts
+index c2b099e92f98b80cd16618267ea727390816a765..85809bf3134227c792fb0fc09038fdd2f5dadff4 100644
+--- a/app/composables/useSeo.ts
++++ b/app/composables/useSeo.ts
+@@ -76,7 +76,10 @@ export function useSeo(options: UseSeoOptions) {
+   // Set canonical link
+   useHead({
+     link: computed(() => {
+-      const links: Array<{ rel: string, href?: string, hreflang?: string }> = []
++      const links: Array<
++        | { rel: 'canonical', href: string }
++        | { rel: 'alternate', href: string, hreflang: string }
++      > = []
+ 
+       // Canonical URL
+       if (canonicalUrl.value) {
+@@ -125,7 +128,7 @@ export function useSeo(options: UseSeoOptions) {
+   // JSON-LD structured data
+   useHead({
+     script: computed(() => {
+-      const scripts: Array<{ type: string, innerHTML: string }> = []
++      const scripts: Array<{ type: 'application/ld+json', innerHTML: string }> = []
+ 
+       if (!baseUrl.value || !title.value) return scripts
+ 
+diff --git a/app/plugins/i18n.ts b/app/plugins/i18n.ts
+index 1d568b72d73f1b393d619b913e727e0b00d269e7..265d13b564885f1ed240e9bd51770a7ce958f989 100644
+--- a/app/plugins/i18n.ts
++++ b/app/plugins/i18n.ts
+@@ -9,7 +9,7 @@ const localeFiles = import.meta.glob<{ default: Record<string, unknown> }>('../.
+ export default defineNuxtPlugin(async () => {
+   const nuxtApp = useNuxtApp()
+ 
+-  const i18nConfig = nuxtApp.$config.public.i18n
++  const i18nConfig = nuxtApp.$config.public.i18n as { defaultLocale?: string } | undefined
+ 
+   // If i18n is not enabled, fetch and provide the configured locale in app config
+   if (!i18nConfig) {
+diff --git a/modules/assistant/index.ts b/modules/assistant/index.ts
+index beaa76709960b0fe14b33e4e77d7c0674f4a5eee..d4ad71ce459673fe00a375aa3cc13827231d7a47 100644
+--- a/modules/assistant/index.ts
++++ b/modules/assistant/index.ts
+@@ -2,6 +2,11 @@ import { addComponent, addImports, addServerHandler, createResolver, defineNuxtM
+ import { defu } from 'defu'
+ 
+ export interface AssistantModuleOptions {
++  /**
++   * Whether to enable the assistant.
++   * @default true
++   */
++  enabled?: boolean
+   /**
+    * API endpoint path for the assistant
+    * @default '/__docus__/assistant'
+@@ -24,6 +29,7 @@ export interface AssistantModuleOptions {
+ const log = logger.withTag('docus')
+ 
+ const defaults: Required<AssistantModuleOptions> = {
++  enabled: true,
+   apiPath: '/__docus__/assistant',
+   mcpServer: '/mcp',
+   model: 'google/gemini-3-flash',
+@@ -41,7 +47,7 @@ export default defineNuxtModule<AssistantModuleOptions>({
+ 
+     const options = defu(nuxt.options.docus?.assistant, legacyOptions, defaults) as Required<AssistantModuleOptions>
+ 
+-    const hasAiGatewayAuth = !!(
++    const hasAiGatewayAuth = options.enabled && !!(
+       process.env.AI_GATEWAY_API_KEY || process.env.VERCEL_OIDC_TOKEN
+     )
+ 
+@@ -80,6 +86,8 @@ export default defineNuxtModule<AssistantModuleOptions>({
+     })
+ 
+     if (!hasAiGatewayAuth) {
++      if (!options.enabled) return
++
+       nuxt.hook('modules:done', () => {
+         log.warn('AI assistant disabled: neither `AI_GATEWAY_API_KEY` nor `VERCEL_OIDC_TOKEN` found')
+       })
+diff --git a/modules/assistant/runtime/composables/useAssistant.ts b/modules/assistant/runtime/composables/useAssistant.ts
+index 7c40d8d54145c3ddcaf29384669740f4f9f97211..879a75c6f0c618c31fd4550762d90929020a861a 100644
+--- a/modules/assistant/runtime/composables/useAssistant.ts
++++ b/modules/assistant/runtime/composables/useAssistant.ts
+@@ -23,6 +23,7 @@ export const useAssistant = createSharedComposable(() => {
+   const config = useRuntimeConfig()
+   const appConfig = useAppConfig()
+   const assistantRuntimeConfig = config.public.assistant as { enabled?: boolean } | undefined
++  const i18nRuntimeConfig = config.public.i18n as { defaultLocale?: string } | undefined
+   const assistantConfig = appConfig.assistant as { faqQuestions?: FaqQuestions | LocalizedFaqQuestions } | undefined
+   const docusRuntimeConfig = appConfig.docus as { locale?: string } | undefined
+   const isEnabled = computed(() => assistantRuntimeConfig?.enabled ?? false)
+@@ -56,7 +57,7 @@ export const useAssistant = createSharedComposable(() => {
+     if (!Array.isArray(faqConfig)) {
+       const localizedConfig = faqConfig as LocalizedFaqQuestions
+       const currentLocale = docusRuntimeConfig?.locale || 'en'
+-      const defaultLocale = config.public.i18n?.defaultLocale || 'en'
++      const defaultLocale = i18nRuntimeConfig?.defaultLocale || 'en'
+ 
+       const questions = localizedConfig[currentLocale]
+         || localizedConfig[defaultLocale]
