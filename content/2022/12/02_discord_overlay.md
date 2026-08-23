@@ -1,6 +1,7 @@
 ---
 title: Discordの疑似Vtuberキットが壊れたので修正した
 date: 2022-12-21 23:42:00
+description: Discord Overlayの仕様変更で壊れたCSSを修正した手順メモ。
 tags:
   - Discord
   - CSS

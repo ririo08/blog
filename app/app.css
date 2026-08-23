@@ -1,0 +1,14 @@
+:root,
+:host {
+  --ui-color-primary-50: #fff8f2;
+  --ui-color-primary-100: #ffeadb;
+  --ui-color-primary-200: #ffd1ad;
+  --ui-color-primary-300: #ffad75;
+  --ui-color-primary-400: #ff823d;
+  --ui-color-primary-500: #ff6600;
+  --ui-color-primary-600: #e85a00;
+  --ui-color-primary-700: #c44700;
+  --ui-color-primary-800: #9c3906;
+  --ui-color-primary-900: #7d310b;
+  --ui-color-primary-950: #441604;
+}
